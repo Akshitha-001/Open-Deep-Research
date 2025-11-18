@@ -1,24 +1,21 @@
-from fastapi import FastAPI
-from core.execution_graph import ResearchOrchestrator
-import uvicorn
+# app.py
+from agents.searcher import SearcherAgent
+from agents.writer import WriterAgent
 
+def main():
+    query = input("Enter your research topic: ")
 
-app = FastAPI(title="Research Agent API")
+    searcher = SearcherAgent()
+    writer = WriterAgent()
 
+    print("\nSearching using Gemini...\n")
+    search_results = searcher.search(query)
 
-orchestrator = ResearchOrchestrator()
+    print("Generating summary...\n")
+    summary = writer.write_summary(query, search_results)
 
-
-@app.get("/health")
-def health():
-    return {"status": "ok"}
-
-
-@app.post("/ask")
-async def ask(query: str):
-    result = orchestrator.run(query)
-    return {"query": query, "result": result}
-
+    print("\n===== FINAL SUMMARY =====\n")
+    print(summary)
 
 if __name__ == "__main__":
-    uvicorn.run("app:app", host="0.0.0.0", port=8000, reload=True)
+    main()
