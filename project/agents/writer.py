@@ -4,26 +4,16 @@ class WriterAgent:
     def __init__(self):
         self.llm = GeminiLLM()
 
-    def write_report(self, topic: str, search_data: str) -> str:
+    def write_report(self, outline: str, search_summary: str):
         prompt = f"""
-        You are a senior technical writer.
+        Write a detailed research report based on:
 
-        Topic: {topic}
+        OUTLINE:
+        {outline}
 
-        Research Summary (from Search Agent):
-        {search_data}
+        SEARCH SUMMARY:
+        {search_summary}
 
-        Write a full structured research report including:
-        - Introduction
-        - Detailed Explanation
-        - Key Concepts
-        - Technical Depth
-        - Practical Applications
-        - Advantages
-        - Limitations
-        - Conclusion
-
-        Use simple and clear language.
+        Provide a clear, well-structured explanation.
         """
-
         return self.llm.generate(prompt)

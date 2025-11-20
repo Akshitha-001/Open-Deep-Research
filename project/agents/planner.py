@@ -1,14 +1,12 @@
-def plan(query: str):
-    query = query.strip()
-    if not query:
-        return ["General overview"]
+from project.core.llm import GeminiLLM
 
-    return [
-        f"Overview: {query}",
-        f"Important concepts about: {query}",
-        f"Recent updates about: {query}",
-    ]
+class PlannerAgent:
+    def __init__(self):
+        self.llm = GeminiLLM()
 
-
-
-#AIzaSyBKFXW6HVUAwHlVtV3WT_gPOMPyKZR9QNQ
+    def create_plan(self, topic: str):
+        prompt = f"""
+        Create a step-by-step research plan for the topic: {topic}.
+        Include clear tasks and substeps.
+        """
+        return self.llm.generate(prompt)
