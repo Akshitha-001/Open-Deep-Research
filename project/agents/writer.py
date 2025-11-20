@@ -1,25 +1,29 @@
-# agents/writer.py
-from core.llm import GeminiLLM
+from project.core.llm import GeminiLLM
 
 class WriterAgent:
     def __init__(self):
         self.llm = GeminiLLM()
 
-    def write_summary(self, query: str, search_data: str):
+    def write_report(self, topic: str, search_data: str) -> str:
         prompt = f"""
-You are a research writer.
+        You are a senior technical writer.
 
-Topic: {query}
+        Topic: {topic}
 
-Here are the search results:
-{search_data}
+        Research Summary (from Search Agent):
+        {search_data}
 
-Write a clean, structured research summary with:
-- Introduction
-- Key insights
-- Important definitions
-- Real-world applications
-- Conclusion
-"""
+        Write a full structured research report including:
+        - Introduction
+        - Detailed Explanation
+        - Key Concepts
+        - Technical Depth
+        - Practical Applications
+        - Advantages
+        - Limitations
+        - Conclusion
+
+        Use simple and clear language.
+        """
 
         return self.llm.generate(prompt)

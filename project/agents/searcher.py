@@ -1,31 +1,21 @@
-# agents/searcher.py
-from core.llm import GeminiLLM
+from project.core.llm import GeminiLLM
 
 class SearcherAgent:
     def __init__(self):
         self.llm = GeminiLLM()
 
-    def search(self, query: str):
+    def search(self, query: str) -> str:
         prompt = f"""
-You are a research search engine.
-Return structured search results for the query:
+        Act as a research search agent.
 
-Query: "{query}"
+        Your job:
+        - Search the web using your internal knowledge
+        - Extract the top facts
+        - Return a short summary of key findings
 
-Return the results in this JSON-like list format:
-[
-  {{
-    "title": "",
-    "content": "",
-    "source": ""
-  }},
-  ...
-]
+        Query: {query}
 
-Ensure at least 5 high-quality results.
-"""
+        Provide accurate and reliable information.
+        """
 
-        response = self.llm.generate(prompt)
-
-        # We return raw LLM text because it's easier to parse later
-        return response
+        return self.llm.generate(prompt)

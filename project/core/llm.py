@@ -1,16 +1,22 @@
-# core/llm.py
-import google.generativeai as genai
 import os
+from dotenv import load_dotenv
+import google.generativeai as genai
+
+# Load .env file
+load_dotenv()
 
 class GeminiLLM:
-    def __init__(self, model_name="gemini-1.5-flash"):
-        api_key = os.getenv("AIzaSyBKFXW6HVUAwHlVtV3WT_gPOMPyKZR9QNQ")
+    def __init__(self):
+        api_key = os.getenv("GEMINI_API_KEY")
+
         if not api_key:
-            raise ValueError("GEMINI_API_KEY not found")
+            raise ValueError("GEMINI_API_KEY not found. Add it to .env file.")
 
         genai.configure(api_key=api_key)
-        self.model = genai.GenerativeModel(model_name)
 
-    def generate(self, prompt: str):
+        # Valid Gemini model
+        self.model = genai.GenerativeModel("gemini-1.5-flash-latest")
+
+    def generate(self, prompt: str) -> str:
         response = self.model.generate_content(prompt)
         return response.text

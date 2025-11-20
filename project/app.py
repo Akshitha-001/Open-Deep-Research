@@ -1,21 +1,22 @@
-# app.py
-from agents.searcher import SearcherAgent
-from agents.writer import WriterAgent
+from project.searcher import SearcherAgent
+from project.writer import WriterAgent
 
 def main():
-    query = input("Enter your research topic: ")
+    print("=== Open Deep Research System (Gemini Version) ===")
+
+    topic = input("Enter your research topic: ")
 
     searcher = SearcherAgent()
     writer = WriterAgent()
 
-    print("\nSearching using Gemini...\n")
-    search_results = searcher.search(query)
+    print("\nSearching information...\n")
+    search_results = searcher.search(topic)
 
-    print("Generating summary...\n")
-    summary = writer.write_summary(query, search_results)
+    print("Generating detailed research report...\n")
+    report = writer.write_report(topic, search_results)
 
-    print("\n===== FINAL SUMMARY =====\n")
-    print(summary)
+    print("\n===== FINAL RESEARCH REPORT =====\n")
+    print(report)
 
 if __name__ == "__main__":
     main()
